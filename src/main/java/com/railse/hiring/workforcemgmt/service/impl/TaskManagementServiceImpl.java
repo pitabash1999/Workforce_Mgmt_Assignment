@@ -70,9 +70,9 @@ public class TaskManagementServiceImpl implements TaskManagementService {
                     .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + item.getTaskId()));
 
 
-            if (item.getPriority() != null) {
-                task.setPriority(item.getPriority());
-            }
+
+            task.setPriority(item.getPriority());
+
             log.info("User {} changed the priority to {} of task_id {}",request.getUserName(),item.getPriority()
             ,item.getTaskId());
             taskRepository.saveTask(
@@ -220,19 +220,7 @@ public class TaskManagementServiceImpl implements TaskManagementService {
                 taskToAssign.setAssigneeId(request.getAssigneeId());
                 taskToAssign.setStatus(TaskStatus.ASSIGNED);
                 log.info("User {} assigned the task_id {}({}) to assigned_id {}.",request.getUserName(),taskToAssign.getId(),taskToAssign.getTask(),request.getAssigneeId());
-                taskRepository.saveTask(
-                        new ActivityOnTask(
-                                taskToAssign.getId(),
-                                new Activity(LocalDateTime.now(),
-                                        request.getUserName(),
-                                        String.format("User %s assigned the task_id %s (%s) to assigned_id %s.",
-                                                request.getUserName(),
-                                                taskToAssign.getId(),
-                                                taskToAssign.getTask(),
-                                                request.getAssigneeId()
-                                        ))
-                        )
-                );
+
                 taskRepository.save(taskToAssign);
 
                 // Cancel the rest
