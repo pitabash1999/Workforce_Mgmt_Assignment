@@ -1,0 +1,19 @@
+<configuration>
+
+<!--    console appender-->
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>
+                %(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] : %msg%n%throwable
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="console"/>
+    </root>
+
+    <logger name="com.railse.hiring" level="INFO"/>
+
+</configuration>
